@@ -1,0 +1,32 @@
+{
+  "cars": [
+    {
+      "make": "Ferari",
+      "model": "F1",
+      "color": "Red",
+      "year": "2020",
+      "price": "1000000",
+      "user": "55j1CZKtLEA",
+      "id": "4sP0Eaw6Ujs"
+    }
+  ],
+  "users": [
+    {
+      "firstName": "hello",
+      "lastName": "man",
+      "username": "helloman123",
+      "email": "helloman@example.com",
+      "password": "123456",
+      "id": "55j1CZKtLEA"
+    },
+    {
+      "firstName": "abc",
+      "lastName": "efg",
+      "username": "abcefg123",
+      "email": "abcefg@example.com",
+      "password": "1234567",
+      "id": "NkRuzuPvIY8"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
