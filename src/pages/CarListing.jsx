@@ -1,6 +1,7 @@
 import CarCard from "../components/CarCard";
 import { getCar } from "../services/carService";
 import { useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 
 function CarListing() {
 
@@ -23,10 +24,11 @@ function CarListing() {
     return (
         <>
             {cars.map(car => (
-                <CarCard
-                    key={car.id}
-                    car={car}
-                />
+                <Link key={car.id} to={`/car-details/${car.id}`}>
+                    <CarCard
+                        car={car}
+                    />
+                </Link>
             ))}
         </>
     )
