@@ -242,6 +242,21 @@ This document serves as our persistent engineering reference for the **AutoSpher
    * Curly braces `{}` require an explicit `return`: `cars.map(car => { return <Link... />; })`.
    * Parentheses `()` provide an implicit return: `cars.map(car => ( <Link... /> ))`. Without `return`, `.map()` returns `undefined`.
 
+### AC. Pre-populating Edit Forms: `defaultValue` vs. Controlled Inputs
+* **The Edit Logic Validated**: Extract `id` with `useParams` $\rightarrow$ fetch with `getCarById(id)` in `useEffect` $\rightarrow$ pre-fill form $\rightarrow$ submit via `updateCar(id, carData)`.
+* **Technique 1 (`defaultValue` with Loading Guard)**:
+  * Keep the form uncontrolled with `new FormData(e.target)`.
+  * Supply `defaultValue={car.make}` on inputs.
+  * Essential Guard: If `!car.id`, render `<p>Loading car data...</p>`. This ensures the inputs do not mount until the fetched data is ready.
+* **Technique 2 (Controlled Form with `value` & `onChange`)**:
+  * Inputs bind to `value={car.make}` and update on every keystroke via `setCar({ ...car, make: e.target.value })`.
+
+### AD. HTTP PATCH Semantics & ID Preservation
+* **How `PATCH /cars/:id` Works**: In REST (and `json-server`), a `PATCH` request targets a specific resource by its URL `:id`. The server updates only the fields provided in the body (`model`, `price`, etc.) and **preserves the existing primary key `id`**.
+* **Verification via Git Diff**: Checking the database diff shows that modifying a car (e.g. `model: "F19"` $\rightarrow$ `"F18"`) keeps `id: "Gbuk1XlvGTo"` completely unchanged.
+
+
+
 
 
 
