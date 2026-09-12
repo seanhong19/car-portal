@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { getUserById } from '../services/userService';
-import { getCarByUserId } from '../services/carService';
+import { getCarByUserId, deleteCar } from '../services/carService';
 import CarCard from "../components/CarCard";
 import { Link } from "react-router-dom";
 
@@ -38,6 +38,17 @@ function UserProfile() {
 
     }, []);
 
+    async function handleDelete(id) {
+        try {
+            await deleteCar(id);
+            alert("Car deleted successfully");
+            setCars(prevCars => prevCars.filter(car => car.id !== id));
+        } catch (e) {
+            alert("Car delete failed");
+            console.log(e);
+        }
+    }
+
     return (
         <>
             <h1>Username: {userData.username}</h1>
@@ -48,9 +59,11 @@ function UserProfile() {
 
             <div>
                 {cars.map(car => (
-                    <Link key={car.id} to={`/edit-car/${car.id}`}>
+                    <div key={car.id}>
                         <CarCard car={car} />
-                    </Link>
+                        <button><Link to={`/edit-car/${car.id}`}>Edit</Link></button>
+                        <button onClick={() => handleDelete(car.id)}>Delete</button>
+                    </div>
                 ))}
             </div>
         </>

@@ -1,24 +1,6 @@
 {
   "cars": [
     {
-      "make": "Ferari",
-      "model": "F1",
-      "color": "Blue",
-      "year": "2020",
-      "price": "1000000",
-      "userId": "55j1CZKtLEA",
-      "id": "4sP0Eaw6Ujs"
-    },
-    {
-      "make": "Audi",
-      "model": "Flyer",
-      "color": "Silver",
-      "year": "1990",
-      "price": "100000111",
-      "userId": "55j1CZKtLEA",
-      "id": "UWbbI8g0NCk"
-    },
-    {
       "make": "Bugati",
       "model": "F19",
       "color": "Blue",
@@ -26,15 +8,6 @@
       "price": "3330000",
       "userId": "55j1CZKtLEA",
       "id": "gSDes2-8ZYY"
-    },
-    {
-      "make": "Proton",
-      "model": "X50",
-      "color": "Black",
-      "year": "2025",
-      "price": "100000",
-      "userId": "NkRuzuPvIY8",
-      "id": "V_gVPFdqQLU"
     }
   ],
   "users": [
