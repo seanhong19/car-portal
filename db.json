@@ -8,6 +8,24 @@
       "price": "1000000",
       "user": "55j1CZKtLEA",
       "id": "4sP0Eaw6Ujs"
+    },
+    {
+      "make": "Bugati",
+      "model": "F19",
+      "color": "blue",
+      "year": "2024",
+      "price": "2200000",
+      "userId": "55j1CZKtLEA",
+      "id": "Gbuk1XlvGTo"
+    },
+    {
+      "make": "Audi",
+      "model": "Flyer",
+      "color": "Silver",
+      "year": "2020",
+      "price": "3000000",
+      "userId": "55j1CZKtLEA",
+      "id": "PT3igynP8sk"
     }
   ],
   "users": [
