@@ -214,6 +214,12 @@ This document serves as our persistent engineering reference for the **AutoSpher
   * Wrap the card or a "View Details" anchor with `<Link to={`/car-details/${car.id}`}>`.
   * The receiving page (`CarDetails.jsx`) extracts the parameter using React Router's `useParams()` hook (`const { id } = useParams()`).
 
+### Y. Dynamic Parameter Re-fetching: `useEffect` Dependency Array (`[id]`)
+* **The Dependency Array in Action**: When navigating between dynamic routes (e.g. `/car-details/1` to `/car-details/2`), React does not unmount and remount the component.
+* **Why `[id]` Matters**: Placing `[id]` in `useEffect(..., [id])` tells React to re-run the effect whenever the URL parameter changes, fetching the new car's data and keeping the view synchronized.
+* **Loading States**: During the initial asynchronous fetch, state is empty `{}`. Adding a guard (`if (!carDetails.id) return <p>Loading...</p>`) prevents rendering empty templates before network resolution.
+
+
 
 
 

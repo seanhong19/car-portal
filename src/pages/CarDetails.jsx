@@ -6,8 +6,8 @@ import { getCarById } from "../services/carService";
 function CarDetails() {
 
     const { id } = useParams();
-    const [ carDetails, setCarDetails ] = useState({});
-    
+    const [carDetails, setCarDetails] = useState({});
+
     useEffect(() => {
         async function fetchCarDetails() {
             try {
@@ -20,6 +20,10 @@ function CarDetails() {
 
         fetchCarDetails();
     }, [id]);
+
+    if (!carDetails.id) {
+        return <p>Loading car details...</p>
+    }
 
     return (
         <>
