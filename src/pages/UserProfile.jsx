@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { getUserById } from '../services/userService';
 import { getCarByUserId, deleteCar } from '../services/carService';
-import CarCard from "../components/CarCard";
+import CarCardDetails from "../components/CarCardDetails";
 import { Link } from "react-router-dom";
 
 function UserProfile() {
@@ -113,7 +113,7 @@ function UserProfile() {
             <div>
                 {filteredCars.map(car => (
                     <div key={car.id}>
-                        <CarCard car={car} />
+                        <CarCardDetails car={car} />
                         <button><Link to={`/edit-car/${car.id}`}>Edit</Link></button>
                         <button onClick={() => handleDelete(car.id)}>Delete</button>
                     </div>

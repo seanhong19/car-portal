@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import CarCard from "../components/CarCard";
+import CarCardDetails from "../components/CarCardDetails";
 import { getCarById } from "../services/carService";
 
 function CarDetails() {
@@ -27,7 +27,7 @@ function CarDetails() {
 
     return (
         <>
-            <CarCard
+            <CarCardDetails
                 car={carDetails}
             />
         </>
