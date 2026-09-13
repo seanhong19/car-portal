@@ -12,6 +12,29 @@ function UserProfile() {
 
     const [userData, setUserData] = useState({});
     const [cars, setCars] = useState([]);
+    const [search, setSearch] = useState("");
+    const [minPrice, setMinPrice] = useState("");
+    const [maxPrice, setMaxPrice] = useState("");
+
+    const filteredCars = cars.filter(car => {
+
+        const matchesSearch = !search || (
+            car.make.toLowerCase().includes(search.toLowerCase()) ||
+            car.model.toLowerCase().includes(search.toLowerCase()) ||
+            car.color.toLowerCase().includes(search.toLowerCase()) ||
+            car.year.toString().includes(search)
+        );
+
+        const matchesMinPrice = !minPrice || (
+            Number(car.price) >= Number(minPrice)
+        );
+
+        const matchesMaxPrice = !maxPrice || (
+            Number(car.price) <= Number(maxPrice)
+        );
+
+        return matchesSearch && matchesMinPrice && matchesMaxPrice;
+    });
 
     useEffect(() => {
         async function fetchUserData() {
@@ -49,6 +72,7 @@ function UserProfile() {
         }
     }
 
+
     return (
         <>
             <h1>Username: {userData.username}</h1>
@@ -56,9 +80,38 @@ function UserProfile() {
 
             <h2>Your Car List: </h2>
 
+            <input
+                type="text"
+                placeholder="Search for make, model, color and year"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+            />
 
             <div>
-                {cars.map(car => (
+                <label htmlFor="min-price">Min: </label>
+                <input
+                    type="text"
+                    id="min-price"
+                    name="min-price"
+                    placeholder="0"
+                    min="0"
+                    value={minPrice}
+                    onChange={(e) => setMinPrice(e.target.value)}
+                />
+                <p> - </p>
+                <label htmlFor="max-price">Max: </label>
+                <input
+                    type="text"
+                    id="max-price"
+                    name="max-price"
+                    placeholder="0"
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(e.target.value)}
+                />
+            </div>
+
+            <div>
+                {filteredCars.map(car => (
                     <div key={car.id}>
                         <CarCard car={car} />
                         <button><Link to={`/edit-car/${car.id}`}>Edit</Link></button>

@@ -284,6 +284,25 @@ Before finalizing CSS styling, an audit against the **Assignment 1 Brief** revea
 3. **The `.filter()` Loop**:
    * `.filter()` is an internal `for` loop. It visits every car in `prevCars`, tests `car.id !== id`, and collects the survivors into a new array.
 
+### AI. Multi-Criteria Search & Filter Interface (Task 6f)
+* **Single vs. Composite Predicates**: Filtering by one field checks one condition. Filtering across multiple criteria (Make, Model, Year, Price Range) uses composite boolean logic:
+  * Each filter is optional: if empty/blank, it passes (`true`).
+  * If populated, it must satisfy the comparison (e.g. `Number(car.price) >= minPrice`).
+* **The "Pass-Through" Rule**:
+  * Make: `!make || car.make.toLowerCase().includes(make.toLowerCase())`
+  * Model: `!model || car.model.toLowerCase().includes(model.toLowerCase())`
+  * Price Range: `(!minPrice || Number(car.price) >= minPrice) && (!maxPrice || Number(car.price) <= maxPrice)`
+* **Component Encapsulation**: A dedicated `<FilterBar />` or inline filter controls keep `CarListing.jsx` organized.
+
+### AJ. Global Search (Omnibar) vs. Range Filtering (UX Trade-offs)
+* **Global Omnibar (Text Matches)**: One unified search input checking `car.make || car.model || car.year`. High convenience, low visual clutter.
+* **The Range Constraint (Price Range)**: Text search checks string inclusion, but "Price Range" is a mathematical inequality (`price <= maxPrice`). A user typing "50000" in text search only finds cars with the exact string "50000", not cars under $50,000.
+* **The Hybrid Solution (Best of Both Worlds)**:
+  1. One primary Search input (handles Make, Model, Year).
+  2. One Max Price input or dropdown (handles Price Range inequality).
+
+
+
 
 
 
