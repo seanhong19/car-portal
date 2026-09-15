@@ -56,13 +56,15 @@ function CarListing() {
                 <label htmlFor="max-price">Max: </label>
                 <input type="number" id="max-price" name="max-price" placeholder="0" value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
             </div>
-            {filteredCars.map(car => (
-                <Link key={car.id} to={`/car-details/${car.id}`}>
-                    <CarCard
-                        car={car}
-                    />
-                </Link>
-            ))}
+            <div className="car-grid">
+                {filteredCars.map(car => (
+                    <Link key={car.id} to={`/car-details/${car.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                        <CarCard
+                            car={car}
+                        />
+                    </Link>
+                ))}
+            </div>
         </>
     )
 }

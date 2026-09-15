@@ -1,15 +1,6 @@
 {
   "cars": [
     {
-      "make": "Bugati",
-      "model": "F19",
-      "color": "Blue",
-      "year": "2022",
-      "price": "3330000",
-      "userId": "55j1CZKtLEA",
-      "id": "gSDes2-8ZYY"
-    },
-    {
       "make": "Ferari",
       "model": "F2",
       "color": "Black",
@@ -17,6 +8,24 @@
       "price": "200000",
       "userId": "55j1CZKtLEA",
       "id": "lmiQETS2K8o"
+    },
+    {
+      "make": "Perodua",
+      "model": "Axia",
+      "color": "Red",
+      "year": "2020",
+      "price": "20000",
+      "userId": "i3BJu0bloOE",
+      "id": "mU6fo_HKAc0"
+    },
+    {
+      "make": "Proton",
+      "model": "X70",
+      "color": "Black",
+      "year": "2021",
+      "price": "40000",
+      "userId": "i3BJu0bloOE",
+      "id": "pX_TaxDEaeY"
     }
   ],
   "users": [
@@ -35,6 +44,14 @@
       "email": "abcefg@example.com",
       "password": "1234567",
       "id": "NkRuzuPvIY8"
+    },
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "username": "John Doe ",
+      "email": "johndoe@example.com",
+      "password": "123456",
+      "id": "i3BJu0bloOE"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

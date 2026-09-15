@@ -63,9 +63,11 @@ function UserProfile() {
 
     async function handleDelete(id) {
         try {
-            await deleteCar(id);
-            alert("Car deleted successfully");
-            setCars(prevCars => prevCars.filter(car => car.id !== id));
+            if (window.confirm("Are you sure you want to delete this car listing?")) {
+                await deleteCar(id);
+                alert("Car deleted successfully");
+                setCars(prevCars => prevCars.filter(car => car.id !== id));
+            }
         } catch (e) {
             alert("Car delete failed");
             console.log(e);
