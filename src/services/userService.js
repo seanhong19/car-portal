@@ -1,11 +1,26 @@
-import API from "../api/axios";
+import { supabase } from "../utils/supabaseClient";
 
-export const getUsers = () => API.get("/users");
+export const getUsers = async (id) => {
+    return await supabase
+        .from('profiles')
+        .select('*');
+}
 
-export const getUserById = (id) => API.get(`/users/${id}`);
+export const getUserById = async (id) => {
+    return await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', id)
+        .single();
+}
+export const getUserByEmail = async (email) => {
 
-export const getUserByEmail = (email) => API.get(`/users?email=${email}`);
-
+}
 export const addUser = (userData) => API.post("/users", userData);
 
-export const updateUser = (id, userData) => API.patch(`/users/${id}`, userData);
+export const updateUser = async (id, userData) => {
+    return await supabase
+        .from('profiles')
+        .update(userData)
+        .eq('id', id);
+}

@@ -1,13 +1,42 @@
-import API from "../api/axios";
+import { supabase } from "../utils/supabaseClient";
 
-export const getCar = () => API.get("/cars");
+export const getCar = async () => {
+    return await supabase
+        .from('cars')
+        .select('*');
+}
 
-export const getCarByUserId = (userId) => API.get(`/cars?userId=${userId}`)
+export const getCarByUserId = async (userId) => {
+    return await supabase
+        .from('cars')
+        .select('*')
+        .eq('user_id', userId);
+}
 
-export const getCarById = (id) => API.get(`/cars/${id}`);
+export const getCarById = async (id) => {
+    return await supabase
+        .from('cars')
+        .select('*')
+        .eq('id', id)
+        .single();
+}
 
-export const addCar = (carData) => API.post("/cars", carData);
+export const addCar = async (carData) => {
+    return await supabase
+        .from('cars')
+        .insert([carData]);
+}
 
-export const updateCar = (id, carData) => API.patch(`/cars/${id}`, carData);
+export const updateCar = async (id, carData) => {
+    return await supabase
+        .from('cars')
+        .update(carData)
+        .eq('id', id);
+}
 
-export const deleteCar = (id) => API.delete(`/cars/${id}`);
+export const deleteCar = async (id) => {
+    return await supabase
+        .from('cars')
+        .delete()
+        .eq('id', id);
+}

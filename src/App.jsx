@@ -1,6 +1,6 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Registration from './pages/Registration';
@@ -11,10 +11,32 @@ import AddCarListing from './pages/AddCarListing';
 import EditCarListing from './pages/EditCarListing';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
+import { supabase } from './utils/supabaseClient';
 
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(Boolean(localStorage.getItem("user")));
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session) {
+        setIsLoggedIn(true);
+
+        localStorage.setItem("user", JSON.stringify(session.user));
+      } else {
+        setIsLoggedIn(false);
+        localStorage.removeItem("user");
+      }
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
+
+  if (loading) {
+    return <div>Loading authentication...</div>;
+  }
 
   return (
     <>

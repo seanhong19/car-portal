@@ -379,3 +379,33 @@ Based on Page 4 of the **Assignment Brief**, the report structure requires:
   * 11 visual verification guides with screenshot boxes and explanatory captions.
   * 4 technical post-mortem engineering challenges and resolutions.
   * Full conclusion and official academic/industry references.
+
+---
+
+## 4. Assignment 2: OAuth-Based Authentication Integration
+
+### AT. Architectural Pivot to Supabase BaaS
+* **Challenge**: The original `json-server` backend cannot act as an OAuth 2.0 authorization server or securely perform authorization code-for-token exchanges. In an SPA, storing OAuth Client Secrets on the client violates basic security standards (Task 4 Rubric penalty).
+* **Engineering Solution**: Selected **Supabase** (PostgreSQL BaaS + GoTrue Auth engine). Client Secrets for providers remain encrypted inside Supabase's vault, and only public `anon` credentials are provided to the Vite frontend via `.env.local` (git-ignored).
+* **Provider Selection**: Integrated **GitHub**, **Google**, and **Discord** (exceeding the 3-provider requirement).
+
+### AU. Database Schema Migration & Relational Modeling
+* **Database Modeling Principles**:
+  * Shifted from flat `db.json` to relational PostgreSQL tables: `public.profiles` and `public.cars`.
+  * **Shared Primary Key Pattern**: `public.profiles.id` directly references `auth.users(id)` with `ON DELETE CASCADE`, enforcing a strict 1:1 relationship and eliminating redundant lookup indexes.
+  * Foreign key constraint on `public.cars.user_id` referencing `public.profiles(id)` with cascade deletion.
+* **Automated Profile Creation Trigger (`handle_new_user`)**:
+  * Implemented a PL/pgSQL stored procedure and trigger on `auth.users` (`AFTER INSERT`).
+  * Utilized PostgreSQL `coalesce` and JSON operators (`->>`) to extract provider-specific metadata (`user_name`, `preferred_username`, `avatar_url`, `picture`, `given_name`, `family_name`) and populate `public.profiles` automatically upon OAuth signup.
+
+### AV. Security & Row Level Security (RLS) Policies
+* **Zero-Trust RLS Implementation**:
+  * `public.profiles`: Public `SELECT` enabled for vehicle listing inspection; `UPDATE` strictly restricted to `auth.uid() = id`.
+  * `public.cars`: Public `SELECT` for marketplace browsing; `INSERT` protected by `WITH CHECK (auth.uid() = user_id)`; `UPDATE` and `DELETE` guarded by `USING (auth.uid() = user_id)`.
+
+### AW. Frontend OAuth Integration & SPA Race Condition Resolution
+* **Client Architecture**: Centralized Supabase client in `src/utils/supabaseClient.js`.
+* **Login Trigger (`Login.jsx`)**: Implemented `supabase.auth.signInWithOAuth()` triggers with provider selection and redirection to `${window.location.origin}/car-listing`.
+* **SPA Auth Race Condition**: Resolved the protected route redirection bug where `ProtectedRoute.jsx` evaluated `isLoggedIn` before Supabase parsed URL OAuth tokens. Introduced a `loading` barrier alongside `supabase.auth.onAuthStateChange` in `src/App.jsx`.
+* **Report Delivery**: Compiled full academic report in [ASSIGNMENT_2_REPORT.md](file:///home/seanjas/Developer/car-portal/ASSIGNMENT_2_REPORT.md).
+

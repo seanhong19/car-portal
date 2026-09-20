@@ -1,9 +1,26 @@
 import { getUserByEmail } from "../services/userService";
 import { useNavigate } from "react-router-dom";
+import { supabase } from '../utils/supabaseClient';
 
 function Login({ setIsLoggedIn }) {
 
     const navigate = useNavigate();
+
+    async function handleOAuthLogin(provider) {
+        try {
+            const { error } = await supabase.auth.signInWithOAuth({
+                provider: provider,
+                options: {
+                    redirectTo: `${window.location.origin}/car-listing`
+                }
+            })
+
+            if (error) throw error;
+        } catch (e) {
+            console.log("OAuth Error: ", e);
+            alert(`Failed to sign in with ${provider}: ${e.message}`)
+        }
+    }
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -47,6 +64,14 @@ function Login({ setIsLoggedIn }) {
                 <br />
                 <button type="submit">Login</button>
             </form>
+            <hr />
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+                <button onClick={() => handleOAuthLogin('github')}>Sign in with GitHub</button>
+                <br />
+                <button onClick={() => handleOAuthLogin('google')}>Sign in with Google</button>
+                <br />
+                <button onClick={() => handleOAuthLogin('discord')}>Sign in with Discord</button>
+            </div>
         </>
     )
 }
