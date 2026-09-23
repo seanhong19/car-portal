@@ -11,8 +11,8 @@ function EditCarListing() {
     useEffect(() => {
         async function fetchCarData() {
             try {
-                const response = await getCarById(id);
-                setCarData(response.data);
+                const data = await getCarById(id);
+                setCarData(data);
             } catch (e) {
                 console.log(e);
             }
@@ -30,10 +30,17 @@ function EditCarListing() {
 
         const user = JSON.parse(localStorage.getItem("user"));
 
-        const carData = { ...formValues, userId: user.id }
+        const updateCarData = {
+            make: formValues.make,
+            model: formValues.model,
+            color: formValues.color,
+            year: parseInt(formValues.year, 10),
+            price: parseFloat(formValues.price),
+            user_id: user.id
+        }
 
         try {
-            await updateCar(id, carData);
+            await updateCar(id, updateCarData);
             alert("Car edited successfully!");
             navigate("/user-profile");
         } catch (e) {

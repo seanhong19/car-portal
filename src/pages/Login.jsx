@@ -30,24 +30,24 @@ function Login({ setIsLoggedIn }) {
         const formValues = Object.fromEntries(formData.entries());
 
         try {
-            const response = await getUserByEmail(formValues.email);
-            if (response.data.length > 0) {
-                if (formValues.password === response.data[0].password) {
-                    alert("Login Success");
-                    form.reset();
-                    const { password, ...userData } = response.data[0];
-                    localStorage.setItem("user", JSON.stringify(userData));
-                    setIsLoggedIn(true);
-                    navigate("/car-listing");
-                } else {
-                    alert("Email or Password is not correct!")
-                }
-            } else {
-                alert("Email or Password is not correct!")
-            }
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: formValues.email,
+                password: formValues.password,
+            });
+
+            if (error) throw error;
+
+            alert("Login Success");
+
+            form.reset();
+
+            setIsLoggedIn(true);
+
+            navigate("/car-listing");
+
         } catch (e) {
             console.log(e)
-            alert("Email or Password is not correct!")
+            alert(e.message || "Email or Password is not correct!");
         }
 
     }

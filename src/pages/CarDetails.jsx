@@ -11,8 +11,8 @@ function CarDetails() {
     useEffect(() => {
         async function fetchCarDetails() {
             try {
-                const response = await getCarById(id);
-                setCarDetails(response.data);
+                const data = await getCarById(id);
+                setCarDetails(data);
             } catch (e) {
                 console.log(e);
             }

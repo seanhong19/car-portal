@@ -18,11 +18,6 @@ function Registration() {
         }
 
         try {
-            const response = await getUserByEmail(formValues.email);
-            if (response.data.length > 0) {
-                alert("User already exists!");
-                return;
-            }
 
             const { confirmPassword, ...userData } = formValues;
             await addUser(userData);
@@ -30,9 +25,9 @@ function Registration() {
             form.reset();
             navigate("/login");
 
-        } catch (error) {
-            console.log(error);
-            alert("Registration failed. Please try again!");
+        } catch (e) {
+            console.log(e);
+            alert(e.message || "Registration failed. Please try again!");
         }
     }
 

@@ -34,8 +34,8 @@ function CarListing() {
     useEffect(() => {
         async function fetchCars() {
             try {
-                const response = await getCar();
-                setCars(response.data);
+                const data = await getCar();
+                setCars(data);
             } catch (e) {
                 console.log(e);
             }

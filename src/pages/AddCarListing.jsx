@@ -1,6 +1,9 @@
 import { addCar } from '../services/carService'
+import { useNavigate } from 'react-router-dom';
 
 function AddCarListing() {
+
+    const navigate = useNavigate();
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -11,15 +14,23 @@ function AddCarListing() {
 
         const user = JSON.parse(localStorage.getItem("user"));
 
-        const carData = { ...formValues, userId: user.id }
+        const carData = {
+            make: formValues.make,
+            model: formValues.model,
+            color: formValues.color,
+            year: parseInt(formValues.year, 10),
+            price: parseFloat(formValues.price),
+            user_id: user.id
+        }
 
         try {
             await addCar(carData);
             alert("Car added successfully!");
             form.reset();
+            navigate("/car-listing")
         } catch (e) {
-            console.log(e);
-            alert("There is an error. Please try again!")
+            console.log("Failed to add car: ", e);
+            alert(`Error: ${e.message || "There is an error. Please try again!"}`)
         }
     }
 

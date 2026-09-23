@@ -39,8 +39,8 @@ function UserProfile() {
     useEffect(() => {
         async function fetchUserData() {
             try {
-                const response = await getUserById(userId);
-                setUserData(response.data);
+                const data = await getUserById(userId);
+                setUserData(data);
             } catch (e) {
                 console.log(e);
             }
@@ -48,9 +48,8 @@ function UserProfile() {
 
         async function fetchCarData() {
             try {
-                const response = await getCarByUserId(userId);
-                console.log(response.data)
-                setCars(response.data);
+                const data = await getCarByUserId(userId);
+                setCars(data);
             } catch (e) {
                 console.log(e);
             }
