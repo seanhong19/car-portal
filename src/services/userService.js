@@ -1,6 +1,6 @@
 import { supabase } from "../utils/supabaseClient";
 
-export const getUsers = async (id) => {
+export const getUsers = async () => {
     const { data, error } = await supabase
         .from('profiles')
         .select('*');
@@ -38,6 +38,7 @@ export const addUser = async (userData) => {
             data: {
                 first_name: userData.firstName,
                 last_name: userData.lastName,
+                user_name: userData.username,
                 username: userData.username
             }
         }

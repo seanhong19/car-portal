@@ -8,7 +8,7 @@ function UserProfile() {
 
     const user = JSON.parse(localStorage.getItem("user"));
 
-    const userId = user.id;
+    const userId = user?.id;
 
     const [userData, setUserData] = useState({});
     const [cars, setCars] = useState([]);
@@ -58,7 +58,7 @@ function UserProfile() {
         fetchUserData();
         fetchCarData();
 
-    }, []);
+    }, [userId]);
 
     async function handleDelete(id) {
         try {

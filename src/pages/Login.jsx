@@ -1,4 +1,3 @@
-import { getUserByEmail } from "../services/userService";
 import { useNavigate } from "react-router-dom";
 import { supabase } from '../utils/supabaseClient';
 
@@ -30,7 +29,7 @@ function Login({ setIsLoggedIn }) {
         const formValues = Object.fromEntries(formData.entries());
 
         try {
-            const { data, error } = await supabase.auth.signInWithPassword({
+            const { error } = await supabase.auth.signInWithPassword({
                 email: formValues.email,
                 password: formValues.password,
             });

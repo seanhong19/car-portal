@@ -1,4 +1,4 @@
-import { getUserByEmail, addUser } from "../services/userService";
+import { addUser } from "../services/userService";
 import { useNavigate } from "react-router-dom";
 
 function Registration() {
@@ -19,7 +19,8 @@ function Registration() {
 
         try {
 
-            const { confirmPassword, ...userData } = formValues;
+            const userData = { ...formValues };
+            delete userData.confirmPassword;
             await addUser(userData);
             alert("User registered successfully!");
             form.reset();
