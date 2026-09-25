@@ -4,7 +4,8 @@ function Logout({ setIsLoggedIn }) {
 
     const navigate = useNavigate();
 
-    function handleLogout() {
+    async function handleLogout() {
+        await supabase.auth.signOut();
         localStorage.removeItem("user");
         setIsLoggedIn(false);
         alert("Logout successfully!");
