@@ -1,9 +1,34 @@
 import { addCar } from '../services/carService'
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 function AddCarListing() {
 
     const navigate = useNavigate();
+
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState("--Select car registration state--");
+    const states = [
+        "Pulau Pinang",
+        "Kuala Lumpur",
+        "Terengganu",
+        "Kelantan",
+        "Perlis",
+        "Johor",
+        "Sarawak",
+        "Sabah",
+        "Kedah",
+        "Perak",
+        "Pahang",
+        "Negeri Sembilan",
+        "Melaka",
+        "Selangor"
+    ];
+
+    const handleSelect = (state) => {
+        setSelectedItem(state);
+        setIsOpen(false);
+    };
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -14,11 +39,17 @@ function AddCarListing() {
 
         const user = JSON.parse(localStorage.getItem("user"));
 
+        if (selectedItem === "--Select car registration state--") {
+            alert("Please select a registration state!");
+            return;
+        }
+
         const carData = {
             make: formValues.make,
             model: formValues.model,
             color: formValues.color,
             year: parseInt(formValues.year, 10),
+            registration: selectedItem,
             price: parseFloat(formValues.price),
             user_id: user.id
         }
@@ -49,6 +80,22 @@ function AddCarListing() {
                 <label htmlFor="year">Year: </label>
                 <input type="number" id="year" name="year" min="1990" max="2026" placeholder="e.g. 2020" required />
                 <br />
+                <label htmlFor="registration">Registration: </label>
+                <div name="registration" id="registration" required>
+                    <button type="button" onClick={() => setIsOpen(!isOpen)}>
+                        {selectedItem}
+                    </button>
+
+                    {isOpen && (
+                        <ul>
+                            {states.map((state, index) => (
+                                <button type="button" key={index} onClick={() => handleSelect(state)}>
+                                    <li>{state}</li>
+                                </button>
+                            ))}
+                        </ul>
+                    )}
+                </div>
                 <label htmlFor="price">Price: </label>
                 <input type="number" id="price" name="price" min="0" step="0.01" placeholder="e.g. 300,000" required />
                 <button type="submit">Submit</button>

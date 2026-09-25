@@ -8,11 +8,40 @@ function EditCarListing() {
     const [carData, setCarData] = useState({});
     const navigate = useNavigate();
 
+    const [isOpen, setIsOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState("--Select car registration state--");
+    const states = [
+        "Pulau Pinang",
+        "Kuala Lumpur",
+        "Terengganu",
+        "Kelantan",
+        "Perlis",
+        "Johor",
+        "Sarawak",
+        "Sabah",
+        "Kedah",
+        "Perak",
+        "Pahang",
+        "Negeri Sembilan",
+        "Melaka",
+        "Selangor"
+    ];
+
+    const handleSelect = (state) => {
+        setSelectedItem(state);
+        setIsOpen(false);
+    };
+
+
     useEffect(() => {
         async function fetchCarData() {
             try {
                 const data = await getCarById(id);
                 setCarData(data);
+
+                if (data?.registration) {
+                    setSelectedItem(data.registration)
+                }
             } catch (e) {
                 console.log(e);
             }
@@ -30,12 +59,18 @@ function EditCarListing() {
 
         const user = JSON.parse(localStorage.getItem("user"));
 
+        if (selectedItem === "--Select car registration state--") {
+            alert("Please select a registration state!");
+            return;
+        }
+
         const updateCarData = {
             make: formValues.make,
             model: formValues.model,
             color: formValues.color,
             year: parseInt(formValues.year, 10),
             price: parseFloat(formValues.price),
+            registration: selectedItem,
             user_id: user.id
         }
 
@@ -67,6 +102,22 @@ function EditCarListing() {
                 <br />
                 <label htmlFor="year">Year: </label>
                 <input type="number" id="year" name="year" min="1990" max="2026" defaultValue={carData.year} required />
+                <br />
+                <div name="registration" id="registration" required>
+                    <button type="button" onClick={() => setIsOpen(!isOpen)}>
+                        {selectedItem}
+                    </button>
+
+                    {isOpen && (
+                        <ul>
+                            {states.map((state, index) => (
+                                <button type="button" defaultValue={carData.registration} key={index} onClick={() => handleSelect(state)}>
+                                    <li>{state}</li>
+                                </button>
+                            ))}
+                        </ul>
+                    )}
+                </div>
                 <br />
                 <label htmlFor="price">Price: </label>
                 <input type="number" id="price" name="price" min="0" step="0.01" defaultValue={carData.price} required />

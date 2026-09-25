@@ -15,7 +15,8 @@ function CarListing() {
             car.make.toLowerCase().includes(search.toLowerCase()) ||
             car.model.toLowerCase().includes(search.toLowerCase()) ||
             car.color.toLowerCase().includes(search.toLowerCase()) ||
-            car.year.toString().includes(search)
+            car.year.toString().includes(search) ||
+            car.registration?.toLowerCase().includes(search.toLowerCase())
         );
 
         const matchesMinPrice = !minPrice || (
@@ -29,6 +30,11 @@ function CarListing() {
         return matchesSearch && matchesMinPrice && matchesMaxPrice;
     });
 
+    function handleClearFilter() {
+        setSearch("");
+        setMinPrice("");
+        setMaxPrice("");
+    };
 
 
     useEffect(() => {
@@ -48,7 +54,7 @@ function CarListing() {
     return (
         <>
             <h1>Car Listing: </h1>
-            <input type="text" placeholder="Search for Make, Model and Year" value={search} onChange={(e) => setSearch(e.target.value)} />
+            <input type="text" placeholder="Search for Make, Model, Year, or Registration..." value={search} onChange={(e) => setSearch(e.target.value)} />
             <div>
                 <label htmlFor="min-price">Min: </label>
                 <input type="number" id="min-price" name="min-price" placeholder="0" min="0" value={minPrice} onChange={(e) => setMinPrice(e.target.value)} />
@@ -56,14 +62,20 @@ function CarListing() {
                 <label htmlFor="max-price">Max: </label>
                 <input type="number" id="max-price" name="max-price" placeholder="0" value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
             </div>
+            <button type="button" onClick={handleClearFilter}>Clear Filters</button>
             <div className="car-grid">
-                {filteredCars.map(car => (
+                {filteredCars.length === 0 ? (
+                    <p style={{ gridColumn: "1 / -1", textAlign: "center", color: "#64748b" }}>
+                        No cars found matching your search citeria. Try clearing your filters!
+                    </p>
+                ) : (filteredCars.map(car => (
                     <Link key={car.id} to={`/car-details/${car.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                         <CarCard
                             car={car}
                         />
-                    </Link>
-                ))}
+                    </Link>))
+                )
+                }
             </div>
         </>
     )

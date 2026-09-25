@@ -5,6 +5,7 @@ function CarCardDetails({ car }) {
             <p>{car.model}</p>
             <p>{car.color}</p>
             <p>{car.year}</p>
+            <p>{car.registration}</p>
             <p>{car.price}</p>
         </div>
     )
