@@ -1,5 +1,6 @@
 import { addUser } from "../services/userService";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../utils/supabaseClient";
 
 function Registration() {
 
@@ -17,12 +18,20 @@ function Registration() {
             return;
         }
 
-        try {
+        const userData = { ...formValues };
+        delete userData.confirmPassword;
 
-            const userData = { ...formValues };
-            delete userData.confirmPassword;
-            await addUser(userData);
-            alert("User registered successfully!");
+        try {
+            const response = await addUser(userData);
+
+            if (response?.user?.identities && response.user.identities.length === 0) {
+                alert("An account with this email already exists! Please login instead.");
+                navigate("/login");
+                return
+            }
+
+            await supabase.auth.signOut();
+            alert("Registration successful! Please log in with your credentials.");
             form.reset();
             navigate("/login");
 
