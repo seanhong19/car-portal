@@ -3,10 +3,13 @@ import Logout from "./Logout";
 
 function Navbar({ isLoggedIn, setIsLoggedIn }) {
     return (
-        <nav>
+        <nav className="navbar">
+            <Link to="/" className="nav-brand">
+                AutoSphere
+            </Link>
             {isLoggedIn ?
                 (
-                    <ul>
+                    <ul className="nav-links">
                         <li><Link to="/">Home</Link></li>
                         <li><Link to="/car-listing">Car Listing</Link></li>
                         <li><Link to="/add-car">Add Car</Link></li>
@@ -14,7 +17,7 @@ function Navbar({ isLoggedIn, setIsLoggedIn }) {
                         <li><Logout setIsLoggedIn={setIsLoggedIn} /></li>
                     </ul>
                 ) : (
-                    <ul>
+                    <ul className="nav-links">
                         <li><Link to="/">Home</Link></li>
                         <li><Link to="/login">Login</Link></li>
                         <li><Link to="/registration">Register</Link></li>
