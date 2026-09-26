@@ -1,6 +1,7 @@
 import { addCar } from '../services/carService'
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import '../index.css'
 
 function AddCarListing() {
 
@@ -81,7 +82,7 @@ function AddCarListing() {
                 <input type="number" id="year" name="year" min="1990" max="2026" placeholder="e.g. 2020" required />
                 <br />
                 <label htmlFor="registration">Registration: </label>
-                <div name="registration" id="registration" required>
+                <div className="custom-dropdown" name="registration" id="registration" required>
                     <button type="button" onClick={() => setIsOpen(!isOpen)}>
                         {selectedItem}
                     </button>

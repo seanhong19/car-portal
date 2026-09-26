@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { getCarById, updateCar } from '../services/carService';
 import { useState, useEffect } from 'react';
+import '../index.css'
 
 function EditCarListing() {
 
@@ -103,7 +104,7 @@ function EditCarListing() {
                 <label htmlFor="year">Year: </label>
                 <input type="number" id="year" name="year" min="1990" max="2026" defaultValue={carData.year} required />
                 <br />
-                <div name="registration" id="registration" required>
+                <div lassName="custom-dropdown" name="registration" id="registration" required>
                     <button type="button" onClick={() => setIsOpen(!isOpen)}>
                         {selectedItem}
                     </button>
