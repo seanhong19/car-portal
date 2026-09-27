@@ -97,70 +97,178 @@ function UserProfile() {
 
 
     return (
-        <>
-            <form onSubmit={handleUpdateProfile}>
-                <label htmlFor='first_name'>First Name: </label>
-                <input type="text" name="first_name" id="first_name" value={firstName} onChange={(e) => setFirstName(e.target.value)} readOnly disabled />
-                <br />
-                <label htmlFor='last_name'>Last Name: </label>
-                <input type="text" name="last_name" id="last_name" value={lastName} onChange={(e) => setLastName(e.target.value)} readOnly disabled />
-                <br />
-                <label htmlFor='username'>Username: </label>
-                <input type="text" name="username" id="username" value={userData.username || ""} readOnly disabled />
-                <br />
-                <label htmlFor='email'>Email: </label>
-                <input type="text" name="email" id="email" value={userData.email || ""} readOnly disabled />
-                <label htmlFor='phone'>Phone: </label>
-                <input type="tel" name="phone" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} min="8" disabled={!isEditing} />
-                <br />
-                <label htmlFor='address'>Address: </label>
-                <input type="text" name="address" id="address" value={address} onChange={(e) => setAddress(e.target.value)} disabled={!isEditing} />
-                <button type='button' onClick={() => setIsEditing(!isEditing)}>{isEditing ? "Cancel" : "Edit"}</button>
-                {isEditing && <button type="submit">Save</button>}
-            </form>
+        <div className='profile-container'>
 
-            <h2>Your Car List: </h2>
+            <div className='profile-section'>
+                <h2>Profile Management</h2>
+                <p className='section-subtitle'>
+                    Identity details are verified from your login provider. You can edit your phone number and address below.
+                </p>
 
-            <input
-                type="text"
-                placeholder="Search for make, model, color and year"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-            />
-
-            <div>
-                <label htmlFor="min-price">Min: </label>
-                <input
-                    type="text"
-                    id="min-price"
-                    name="min-price"
-                    placeholder="0"
-                    min="0"
-                    value={minPrice}
-                    onChange={(e) => setMinPrice(e.target.value)}
-                />
-                <p> - </p>
-                <label htmlFor="max-price">Max: </label>
-                <input
-                    type="text"
-                    id="max-price"
-                    name="max-price"
-                    placeholder="0"
-                    value={maxPrice}
-                    onChange={(e) => setMaxPrice(e.target.value)}
-                />
-            </div>
-
-            <div>
-                {filteredCars.map(car => (
-                    <div key={car.id}>
-                        <CarCardDetails car={car} />
-                        <button><Link to={`/edit-car/${car.id}`}>Edit</Link></button>
-                        <button onClick={() => handleDelete(car.id)}>Delete</button>
+                <form onSubmit={handleUpdateProfile} style={{ margin: 0, padding: 0, maxWidth: '100%', boxShadow: 'none' }}>
+                    <div className='form-row'>
+                        <div>
+                            <label htmlFor='first_name'>
+                                First Name:
+                            </label>
+                            <input
+                                type="text"
+                                name="first_name"
+                                id="first_name"
+                                value={firstName}
+                                onChange={(e) => setFirstName(e.target.value)}
+                                readOnly disabled
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor='last_name'>
+                                Last Name:
+                            </label>
+                            <input
+                                type="text"
+                                name="last_name"
+                                id="last_name"
+                                value={lastName}
+                                onChange={(e) => setLastName(e.target.value)}
+                                readOnly disabled
+                            />
+                        </div>
                     </div>
-                ))}
+                    <div className='form-row'>
+                        <div>
+                            <label htmlFor='username'>Username: </label>
+                            <input
+                                type="text"
+                                name="username"
+                                id="username"
+                                value={userData.username || ""}
+                                readOnly disabled
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor='email'>Email: </label>
+                            <input
+                                type="text"
+                                name="email"
+                                id="email" value={userData.email || ""}
+                                readOnly disabled
+                            />
+                        </div>
+                    </div>
+                    <div className='form-row'>
+                        <div>
+                            <label htmlFor='phone'>Phone: </label>
+                            <input
+                                type="tel"
+                                name="phone"
+                                id="phone"
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
+                                min="8"
+                                disabled={!isEditing}
+                            />
+                        </div>
+                        <div>
+                            <label htmlFor='address'>Mailing Address: </label>
+                            <input
+                                type="text"
+                                name="address"
+                                id="address"
+                                value={address}
+                                onChange={(e) => setAddress(e.target.value)}
+                                disabled={!isEditing}
+                            />
+                        </div>
+                    </div>
+
+                    <div className='form-actions'>
+                        <button
+                            type='button'
+                            className='btn-secondary'
+                            onClick={() => setIsEditing(!isEditing)}>
+                            {isEditing ? "Cancel" : "Edit"}
+                        </button>
+                        {isEditing && (
+                            <button type="submit">
+                                Save Changes
+                            </button>
+                        )}
+                    </div>
+                </form>
             </div>
-        </>
+
+
+            <div className='profile-section'>
+                <h2>Your Listed Car ({filteredCars.length})</h2>
+                <p className='section-subtitle'>Manage or remove the vehicles you have posted on AutoSphere Motors.</p>
+
+                <div className='filter-toolbar'>
+                    <input
+                        type="text"
+                        className='filter-search'
+                        placeholder="Search your listings..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                    />
+
+                    <div className='filter-price-group'>
+                        <label htmlFor="profile-min-price">Min:</label>
+                        <input
+                            type="number"
+                            id="profile-min-price"
+                            name="profile-min-price"
+                            placeholder="0"
+                            min="0"
+                            value={minPrice}
+                            onChange={(e) => setMinPrice(e.target.value)}
+                        />
+                        <span>-</span>
+                        <label htmlFor="profile-max-price">Max:</label>
+                        <input
+                            type="number"
+                            id="profile-max-price"
+                            name="profile-max-price"
+                            placeholder="0"
+                            value={maxPrice}
+                            onChange={(e) => setMaxPrice(e.target.value)}
+                        />
+                    </div>
+                </div>
+
+                {filteredCars.length === 0 ? (
+                    <div style={{ textAlign: "center", padding: "2rem", color: 'var(--text-muted' }}>
+                        <p>You haven't listed any cars yet matching this criteria.</p>
+                        <Link to="/add-car">
+                            <button type="button" style={{ marginTop: '0.5rem' }}>
+                                + Add a Car Listing
+                            </button>
+                        </Link>
+                    </div>
+                ) : (
+                    <div className='car-grid'>
+                        {filteredCars.map(car => (
+                            <div key={car.id} className='user-car-card'>
+                                <CarCardDetails car={car} />
+                                <div className='user-car-actions'>
+                                    <Link to={`/edit-car/${car.id}`}>
+                                        <button type='button' className='btn-secondary' style={{ width: '100%' }}>
+                                            Edit
+                                        </button>
+                                    </Link>
+                                    <button
+                                        type='button'
+                                        className='btn-danger'
+                                        onClick={() => handleDelete(car.id)}
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+        </div>
     )
 }
 
