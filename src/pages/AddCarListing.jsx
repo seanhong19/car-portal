@@ -1,11 +1,12 @@
 import { addCar } from '../services/carService'
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import '../index.css'
+import { useToast } from '../context/ToastContext';
 
 function AddCarListing() {
 
     const navigate = useNavigate();
+    const { showToast } = useToast();
 
     const [isOpen, setIsOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState("--Select car registration state--");
@@ -41,7 +42,7 @@ function AddCarListing() {
         const user = JSON.parse(localStorage.getItem("user"));
 
         if (selectedItem === "--Select car registration state--") {
-            alert("Please select a registration state!");
+            showToast("Please select a vehicle registration state before submitting.", "info");
             return;
         }
 
@@ -57,12 +58,12 @@ function AddCarListing() {
 
         try {
             await addCar(carData);
-            alert("Car added successfully!");
+            showToast("Car listing published successfully!", "success");
             form.reset();
             navigate("/car-listing")
         } catch (e) {
             console.log("Failed to add car: ", e);
-            alert(`Error: ${e.message || "There is an error. Please try again!"}`)
+            showToast(`Error: ${e.message || "There is an error. Please try again!"}`, "error")
         }
     }
 

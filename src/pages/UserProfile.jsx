@@ -3,9 +3,11 @@ import { getUserById, updateUser } from '../services/userService';
 import { getCarByUserId, deleteCar } from '../services/carService';
 import CarCardDetails from "../components/CarCardDetails";
 import { Link } from "react-router-dom";
+import { useToast } from '../context/ToastContext';
 
 function UserProfile() {
 
+    const { showToast } = useToast();
     const user = JSON.parse(localStorage.getItem("user"));
 
     const userId = user?.id;
@@ -46,11 +48,11 @@ function UserProfile() {
 
         try {
             await updateUser(userId, { phone: phone, address: address });
-            alert("Profile updated successfully!");
+            showToast("Profile updated successfully!", "success");
             setIsEditing(false);
         } catch (e) {
             console.log("Upadate Profile Error: " + e.message);
-            alert("Update Profile Failed: " + e.message);
+            showToast(e.message || "Failed to update profile. Please try again.", "error");
         }
     }
 
@@ -86,11 +88,11 @@ function UserProfile() {
         try {
             if (window.confirm("Are you sure you want to delete this car listing?")) {
                 await deleteCar(id);
-                alert("Car deleted successfully");
+                showToast("Listing deleted successfully", "success");
                 setCars(prevCars => prevCars.filter(car => car.id !== id));
             }
         } catch (e) {
-            alert("Car delete failed");
+            showToast(e.message || "Unable to delete listing. Please try again.", "error");
             console.log(e);
         }
     }

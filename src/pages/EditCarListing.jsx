@@ -1,13 +1,14 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { getCarById, updateCar } from '../services/carService';
 import { useState, useEffect } from 'react';
-import '../index.css'
+import { useToast } from '../context/ToastContext';
 
 function EditCarListing() {
 
     const { id } = useParams();
     const [carData, setCarData] = useState({});
     const navigate = useNavigate();
+    const { showToast } = useToast();
 
     const [isOpen, setIsOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState("--Select car registration state--");
@@ -61,7 +62,7 @@ function EditCarListing() {
         const user = JSON.parse(localStorage.getItem("user"));
 
         if (selectedItem === "--Select car registration state--") {
-            alert("Please select a registration state!");
+            showToast("Please select a vehicle registration state before saving.", "info");
             return;
         }
 
@@ -77,11 +78,11 @@ function EditCarListing() {
 
         try {
             await updateCar(id, updateCarData);
-            alert("Car edited successfully!");
+            showToast("Listing updated successfully!", "success");
             navigate("/user-profile");
         } catch (e) {
             console.log(e);
-            alert("There is an error. Please try again!");
+            showToast("Failed to update listing. Please try again.", "error");
         }
     }
 
