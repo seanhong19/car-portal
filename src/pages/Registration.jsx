@@ -2,10 +2,12 @@ import { addUser } from "../services/userService";
 import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "../utils/supabaseClient";
 import { useState } from "react";
+import { useToast } from "../context/ToastContext";
 
 function Registration() {
 
     const navigate = useNavigate();
+    const { showToast } = useToast();
     const [errorMessage, setErrorMessage] = useState("");
 
     async function handleSubmit(e) {
@@ -60,7 +62,7 @@ function Registration() {
             }
 
             await supabase.auth.signOut();
-            alert("Registration successful! Please log in with your credentials.");
+            showToast("Registration successful! Please log in with your credentials.", "success");
             form.reset();
             navigate("/login");
 
