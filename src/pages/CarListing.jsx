@@ -52,17 +52,45 @@ function CarListing() {
 
 
     return (
-        <>
-            <h1>Car Listing: </h1>
-            <input type="text" placeholder="Search for Make, Model, Year, or Registration..." value={search} onChange={(e) => setSearch(e.target.value)} />
-            <div>
-                <label htmlFor="min-price">Min: </label>
-                <input type="number" id="min-price" name="min-price" placeholder="0" min="0" value={minPrice} onChange={(e) => setMinPrice(e.target.value)} />
-                <p> - </p>
-                <label htmlFor="max-price">Max: </label>
-                <input type="number" id="max-price" name="max-price" placeholder="0" value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
+        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '1.5rem' }}>
+            <h1>Used Car Marketplace</h1>
+
+
+            <div className="filter-toolbar">
+                <input
+                    type="text"
+                    className="filter-search"
+                    placeholder="🔎 Search for Make, Model, Year, or Registration..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
+
+                <div className="filter-price-group">
+                    <label htmlFor="min-price" style={{ margin: 0 }}>Min: </label>
+                    <input
+                        type="number"
+                        id="min-price"
+                        name="min-price"
+                        placeholder="0"
+                        min="0"
+                        value={minPrice}
+                        onChange={(e) => setMinPrice(e.target.value)}
+                    />
+                    <span>-</span>
+                    <label htmlFor="max-price" style={{ margin: 0 }}>Max: </label>
+                    <input
+                        type="number"
+                        id="max-price"
+                        name="max-price"
+                        placeholder="Any"
+                        value={maxPrice}
+                        onChange={(e) => setMaxPrice(e.target.value)}
+                    />
+                </div>
+
+                <button type="button" onClick={handleClearFilter}>Clear Filters</button>
             </div>
-            <button type="button" onClick={handleClearFilter}>Clear Filters</button>
+
             <div className="car-grid">
                 {filteredCars.length === 0 ? (
                     <p style={{ gridColumn: "1 / -1", textAlign: "center", color: "#64748b" }}>
@@ -77,7 +105,7 @@ function CarListing() {
                 )
                 }
             </div>
-        </>
+        </div>
     )
 }
 
