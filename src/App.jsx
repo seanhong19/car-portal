@@ -12,6 +12,7 @@ import EditCarListing from './pages/EditCarListing';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
 import { supabase } from './utils/supabaseClient';
+import { ToastProvider } from './context/ToastContext';
 
 function App() {
 
@@ -39,7 +40,7 @@ function App() {
   }
 
   return (
-    <>
+    <ToastProvider>
       <Router>
         <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
         <Routes>
@@ -88,7 +89,7 @@ function App() {
           />
         </Routes>
       </Router>
-    </>
+    </ToastProvider>
   )
 }
 

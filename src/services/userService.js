@@ -40,8 +40,6 @@ export const addUser = async (userData) => {
                 last_name: userData.lastName,
                 user_name: userData.username,
                 username: userData.username,
-                phone: userData.phone,
-                address: userData.address
             }
         }
     })
