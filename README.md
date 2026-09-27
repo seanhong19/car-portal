@@ -44,7 +44,6 @@ AutoSphere Motors is a modern, responsive, full-stack Used Car Marketplace Porta
 ```text
 car-portal/
 ├── src/
-│   ├── api/            # Centralized API clients
 │   ├── components/     # Reusable UI components (Navbar, CarCard, CarCardDetails, ProtectedRoute)
 │   ├── context/        # React Context providers (ToastContext)
 │   ├── pages/          # Application views (Home, Login, Registration, CarListing, CarDetails, UserProfile, etc.)
