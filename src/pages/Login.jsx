@@ -1,9 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from '../utils/supabaseClient';
+import { useToast } from "../context/ToastContext";
 
 function Login({ setIsLoggedIn }) {
 
     const navigate = useNavigate();
+    const { showToast } = useToast();
 
     const GitHubIcon = () => (
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -38,7 +40,7 @@ function Login({ setIsLoggedIn }) {
             if (error) throw error;
         } catch (e) {
             console.log("OAuth Error: ", e);
-            alert(`Failed to sign in with ${provider}: ${e.message}`)
+            showToast(`Failed to sign in with ${provider}: ${e.message}`, "error")
         }
     }
 
@@ -58,7 +60,7 @@ function Login({ setIsLoggedIn }) {
 
             if (error) throw error;
 
-            alert("Login Success");
+            showToast("Welcome back! Login Successful.", "success");
 
             form.reset();
 
@@ -68,7 +70,7 @@ function Login({ setIsLoggedIn }) {
 
         } catch (e) {
             console.log(e)
-            alert(e.message || "Email or Password is not correct!");
+            showToast(e.message || "Email or Password is not correct.", "error");
         }
 
     }
