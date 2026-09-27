@@ -56,7 +56,7 @@ car-portal/
 ├── package.json        # Project dependencies and npm scripts
 └── README.md           # Project setup and documentation
 ```
-
+6
 ---
 
 ## 5. Local Setup & Installation
