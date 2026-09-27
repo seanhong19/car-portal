@@ -55,3 +55,56 @@ car-portal/
 ├── .env.example        # Environment variable template
 ├── package.json        # Project dependencies and npm scripts
 └── README.md           # Project setup and documentation
+```
+
+---
+
+## 5. Local Setup & Installation
+
+**Prerequisites**
+
+- [Node.js](https://nodejs.org/en) (v18.0.0 or higher recommended)
+- `npm` (v9.0.0 or higher)
+
+**Installation Steps**
+ 
+1. **Clone the repository:**
+
+```bash
+git clone <repository_url>
+cd car-portal
+```
+
+2. **Install project dependencies:**
+
+```bash
+npm install
+```
+
+3. **Configure Environment Variables:** Create a `.env.local` file in the project root based on `.env.example`:
+
+```bash
+cp .env.example .env.local
+```
+
+Open `.env.local` and provide your active Supabase project credentials:
+
+```env
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_PUBLISHABLE_KEY=your-supabase-publishable-key
+```
+
+4. **Start the Development Server:**
+
+```bash
+npm run dev
+```
+
+Open your browser and navigate to `http://localhost:5173`.
+
+5. **Build for Production (Optional):**
+
+```bash
+npm run build
+npm run preview
+```
